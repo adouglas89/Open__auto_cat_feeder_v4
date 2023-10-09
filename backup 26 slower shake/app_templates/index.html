@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Open Source Auto Cat Feeder</title>
+    </head>
+    <body>
+        <h1>Success</h1>
+        
+        <p>Daily repeating food times (this is a list of lists, in UTC time, in format [[hour, minute, second, scoops],[hour, minute, second, scoops]...])  And diagnostics info: <span id="tempValue"></span>.</p>
+        <br/>
+        <p>To change the times or quanitity, copy and paste it into the text box and modify or add additional feeding times.  It has to be in the right format.</p>
+        <button id="toggleBtn">Serve 1 scoop</button>
+        <form method="post" action="/">
+        <input type="search" name="submission" />
+        <input type="submit" value="Submit" />
+        </form>
+        <script src="data:text/javascript,document.getElementById('toggleBtn').onclick = async function() { await fetch('/toggle'); };" defer></script>
+        <script src="data:text/javascript,document.getElementById('resetBtn').onclick = function() { window.location.href = '/reset'; };" defer></script>
+        <script src="data:text/javascript,async function getTemp() { const elem = document.getElementById('tempValue'); elem.innerHTML = 'Updating...'; const t = await fetch('/temperature'); const tVal = await t.text(); elem.innerHTML = tVal; setTimeout(getTemp, 10000)}; getTemp();" defer></script>
+    </body>
+</html>
